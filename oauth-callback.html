@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth 콜백</title>
+</head>
+<body>
+    <script>
+        // URL 파라미터에서 코드와 에러 추출
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        // 부모 창에 메시지 전송
+        window.opener.postMessage({
+            type: 'oauth_callback',
+            code: code,
+            error: error
+        }, window.location.origin);
+        
+        // 팝업 창 닫기
+        window.close();
+    </script>
+</body>
+</html> 

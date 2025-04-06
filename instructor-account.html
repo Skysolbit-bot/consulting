@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국커리어개발원 - 강사 계정 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .account-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .account-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .account-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .account-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .account-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .account-sidebar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .account-sidebar .nav-link {
+            color: #495057;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .account-sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #3a86ff;
+        }
+        
+        .account-sidebar .nav-link.active {
+            background-color: #3a86ff;
+            color: white;
+        }
+        
+        .account-content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .account-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #333;
+            border-bottom: 2px solid #3a86ff;
+            padding-bottom: 10px;
+        }
+        
+        .schedule-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .schedule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .schedule-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .schedule-info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+        
+        .schedule-info-item i {
+            color: #3a86ff;
+        }
+        
+        .schedule-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-action {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-card h3 {
+            font-size: 2rem;
+            color: #3a86ff;
+            margin-bottom: 10px;
+        }
+        
+        .stats-card p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .profile-info {
+            margin-bottom: 20px;
+        }
+        
+        .profile-info p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .profile-info strong {
+            color: #333;
+            margin-right: 10px;
+        }
+        
+        .workshop-list {
+            margin-top: 30px;
+        }
+        
+        .workshop-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .workshop-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .workshop-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .workshop-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .workshop-info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+        
+        .workshop-info-item i {
+            color: #3a86ff;
+        }
+        
+        .workshop-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .notification-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .notification-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .notification-item p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .notification-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .settings-section {
+            margin-bottom: 30px;
+        }
+        
+        .settings-form {
+            max-width: 600px;
+        }
+        
+        .settings-form .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .settings-form .form-control {
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+        
+        .settings-form .form-control:focus {
+            border-color: #3a86ff;
+            box-shadow: 0 0 0 0.2rem rgba(58, 134, 255, 0.25);
+        }
+        
+        .settings-form .btn-save {
+            background-color: #3a86ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-form .btn-save:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+        }
+        
+        .payment-history {
+            margin-top: 30px;
+        }
+        
+        .payment-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .payment-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .payment-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-info-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+        }
+        
+        .payment-info-item i {
+            color: #3a86ff;
+        }
+        
+        .payment-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3a86ff;
+        }
+        
+        .payment-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .payment-status.paid {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .payment-status.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .payment-status.failed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        @media (max-width: 768px) {
+            .account-sidebar {
+                margin-bottom: 30px;
+            }
+            
+            .schedule-info, .workshop-info, .payment-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .schedule-actions, .workshop-actions {
+                flex-direction: column;
+            }
+            
+            .btn-action {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="한국커리어개발원 로고">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshops.html">워크샵</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="account-section">
+        <div class="container">
+            <div class="account-header">
+                <h1>강사 계정 관리</h1>
+                <p>워크샵 일정, 수익, 프로필 등을 관리하세요</p>
+            </div>
+            
+            <div class="account-container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="account-sidebar">
+                            <div class="nav flex-column nav-pills" id="account-tab" role="tablist">
+                                <a class="nav-link active" id="dashboard-tab" data-bs-toggle="pill" href="#dashboard" role="tab">대시보드</a>
+                                <a class="nav-link" id="schedule-tab" data-bs-toggle="pill" href="#schedule" role="tab">일정 관리</a>
+                                <a class="nav-link" id="workshops-tab" data-bs-toggle="pill" href="#workshops" role="tab">내 워크샵</a>
+                                <a class="nav-link" id="profile-tab" data-bs-toggle="pill" href="#profile" role="tab">프로필</a>
+                                <a class="nav-link" id="notifications-tab" data-bs-toggle="pill" href="#notifications" role="tab">알림</a>
+                                <a class="nav-link" id="settings-tab" data-bs-toggle="pill" href="#settings" role="tab">설정</a>
+                                <a class="nav-link" id="payments-tab" data-bs-toggle="pill" href="#payments" role="tab">수익 관리</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-9">
+                        <div class="tab-content" id="account-tabContent">
+                            <!-- 대시보드 탭 -->
+                            <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>대시보드</h2>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>12</h3>
+                                                <p>이번 달 워크샵</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>245</h3>
+                                                <p>총 참가자</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>4.8</h3>
+                                                <p>평균 평점</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="mb-3">최근 일정</h3>
+                                    <div class="schedule-card">
+                                        <h3>트렌디한 목적별티 블렌딩</h3>
+                                        <div class="schedule-info">
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 15일</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>14:00 - 16:00</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>서울시 마포구 와우산로 45</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>15명 참가</span>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-actions">
+                                            <a href="#" class="btn btn-primary btn-action">상세보기</a>
+                                            <a href="#" class="btn btn-outline-primary btn-action">참가자 목록</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="schedule-card">
+                                        <h3>내 마음을 색으로 표현하는 마음돌봄 페인팅</h3>
+                                        <div class="schedule-info">
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 20일</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>10:00 - 12:00</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>서울시 강남구 테헤란로 123</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>20명 참가</span>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-actions">
+                                            <a href="#" class="btn btn-primary btn-action">상세보기</a>
+                                            <a href="#" class="btn btn-outline-primary btn-action">참가자 목록</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="mb-3 mt-4">최근 수익</h3>
+                                    <div class="payment-item">
+                                        <h3>트렌디한 목적별티 블렌딩</h3>
+                                        <div class="payment-info">
+                                            <div class="payment-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 10일</span>
+                                            </div>
+                                            <div class="payment-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>12명 참가</span>
+                                            </div>
+                                            <div class="payment-info-item">
+                                                <i class="fas fa-won-sign"></i>
+                                                <span class="payment-amount">620,000원</span>
+                                            </div>
+                                            <div class="payment-info-item">
+                                                <span class="payment-status paid">지급완료</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 일정 관리 탭 -->
+                            <div class="tab-pane fade" id="schedule" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>일정 관리</h2>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h3>4월 일정</h3>
+                                        <a href="#" class="btn btn-primary">새 일정 추가</a>
+                                    </div>
+                                    
+                                    <div class="schedule-card">
+                                        <h3>트렌디한 목적별티 블렌딩</h3>
+                                        <div class="schedule-info">
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 15일</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>14:00 - 16:00</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>서울시 마포구 와우산로 45</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>15명 참가</span>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-actions">
+                                            <a href="#" class="btn btn-primary btn-action">상세보기</a>
+                                            <a href="#" class="btn btn-outline-primary btn-action">참가자 목록</a>
+                                            <a href="#" class="btn btn-outline-danger btn-action">취소</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="schedule-card">
+                                        <h3>내 마음을 색으로 표현하는 마음돌봄 페인팅</h3>
+                                        <div class="schedule-info">
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 20일</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>10:00 - 12:00</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>서울시 강남구 테헤란로 123</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>20명 참가</span>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-actions">
+                                            <a href="#" class="btn btn-primary btn-action">상세보기</a>
+                                            <a href="#" class="btn btn-outline-primary btn-action">참가자 목록</a>
+                                            <a href="#" class="btn btn-outline-danger btn-action">취소</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="schedule-card">
+                                        <h3>늘 갖고 다니는 휴대폰 악세사리에 추억을 담아</h3>
+                                        <div class="schedule-info">
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <span>2024년 4월 25일</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>15:00 - 17:00</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <span>서울시 서초구 서초대로 456</span>
+                                            </div>
+                                            <div class="schedule-info-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>18명 참가</span>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-actions">
+                                            <a href="#" class="btn btn-primary btn-action">상세보기</a>
+                                            <a href="#" class="btn btn-outline-primary btn-action">참가자 목록</a>
+                                            <a href="#" class="btn btn-outline-danger btn-action">취소</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 내 워크샵 탭 -->
+                            <div class="tab-pane fade" id="workshops" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>내 워크샵</h2>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h3>등록된 워크샵</h3>
+                                        <a href="#" class="btn btn-primary">새 워크샵 등록</a>
+                                    </div>
+                                    
+                                    <div class="workshop-list">
+                                        <div class="workshop-item">
+                                            <h3>트렌디한 목적별티 블렌딩</h3>
+                                            <div class="workshop-info">
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-tag"></i>
+                                                    <span>문화</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>2시간</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>10-100명</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span>620,000원</span>
+                                                </div>
+                                            </div>
+                                            <div class="workshop-actions">
+                                                <a href="#" class="btn btn-primary btn-action">수정</a>
+                                                <a href="#" class="btn btn-outline-primary btn-action">일정 관리</a>
+                                                <a href="#" class="btn btn-outline-danger btn-action">삭제</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="workshop-item">
+                                            <h3>내 마음을 색으로 표현하는 마음돌봄 페인팅</h3>
+                                            <div class="workshop-info">
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-tag"></i>
+                                                    <span>심리</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>2시간</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>10-100명</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span>440,000원</span>
+                                                </div>
+                                            </div>
+                                            <div class="workshop-actions">
+                                                <a href="#" class="btn btn-primary btn-action">수정</a>
+                                                <a href="#" class="btn btn-outline-primary btn-action">일정 관리</a>
+                                                <a href="#" class="btn btn-outline-danger btn-action">삭제</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="workshop-item">
+                                            <h3>늘 갖고 다니는 휴대폰 악세사리에 추억을 담아</h3>
+                                            <div class="workshop-info">
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-tag"></i>
+                                                    <span>문화</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>2시간</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>10-1000명</span>
+                                                </div>
+                                                <div class="workshop-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span>400,000원</span>
+                                                </div>
+                                            </div>
+                                            <div class="workshop-actions">
+                                                <a href="#" class="btn btn-primary btn-action">수정</a>
+                                                <a href="#" class="btn btn-outline-primary btn-action">일정 관리</a>
+                                                <a href="#" class="btn btn-outline-danger btn-action">삭제</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 프로필 탭 -->
+                            <div class="tab-pane fade" id="profile" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>프로필</h2>
+                                    
+                                    <div class="profile-section">
+                                        <div class="text-center">
+                                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="프로필 이미지" class="profile-image">
+                                            <div class="mb-3">
+                                                <a href="#" class="btn btn-outline-primary">이미지 변경</a>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="profile-info">
+                                            <p><strong>이름:</strong> 김강사</p>
+                                            <p><strong>이메일:</strong> instructor@example.com</p>
+                                            <p><strong>연락처:</strong> 010-1234-5678</p>
+                                            <p><strong>소속:</strong> 한국커리어개발원</p>
+                                            <p><strong>직함:</strong> 수석 강사</p>
+                                            <p><strong>전문 분야:</strong> 문화, 심리, 팀빌딩</p>
+                                            <p><strong>소개:</strong> 10년 이상의 워크샵 경험을 가진 전문 강사입니다. 다양한 분야의 워크샵을 진행해왔으며, 참가자들의 높은 만족도를 얻고 있습니다.</p>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <a href="#" class="btn btn-primary">프로필 수정</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 알림 탭 -->
+                            <div class="tab-pane fade" id="notifications" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>알림</h2>
+                                    
+                                    <div class="notification-item">
+                                        <h4>새로운 워크샵 예약</h4>
+                                        <p>트렌디한 목적별티 블렌딩 워크샵에 새로운 예약이 들어왔습니다.</p>
+                                        <p class="notification-date">2024년 4월 10일 14:30</p>
+                                    </div>
+                                    
+                                    <div class="notification-item">
+                                        <h4>워크샵 취소 알림</h4>
+                                        <p>내 마음을 색으로 표현하는 마음돌봄 페인팅 워크샵에서 2명의 참가자가 취소했습니다.</p>
+                                        <p class="notification-date">2024년 4월 9일 09:15</p>
+                                    </div>
+                                    
+                                    <div class="notification-item">
+                                        <h4>수익 지급 알림</h4>
+                                        <p>3월 워크샵 수익이 지급되었습니다. 총 1,240,000원이 계좌로 입금되었습니다.</p>
+                                        <p class="notification-date">2024년 4월 5일 10:00</p>
+                                    </div>
+                                    
+                                    <div class="notification-item">
+                                        <h4>시스템 업데이트 알림</h4>
+                                        <p>한국커리어개발원 플랫폼이 업데이트되었습니다. 새로운 기능을 확인해보세요.</p>
+                                        <p class="notification-date">2024년 4월 1일 08:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 설정 탭 -->
+                            <div class="tab-pane fade" id="settings" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>설정</h2>
+                                    
+                                    <div class="settings-section">
+                                        <h3 class="mb-4">계정 설정</h3>
+                                        
+                                        <form class="settings-form">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">이메일</label>
+                                                <input type="email" class="form-control" id="email" value="instructor@example.com">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">연락처</label>
+                                                <input type="tel" class="form-control" id="phone" value="010-1234-5678">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">비밀번호</label>
+                                                <input type="password" class="form-control" id="password" placeholder="새 비밀번호">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                                                <input type="password" class="form-control" id="confirmPassword" placeholder="새 비밀번호 확인">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="notificationEmail" class="form-label">알림 이메일</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="notificationEmail" checked>
+                                                    <label class="form-check-label" for="notificationEmail">
+                                                        이메일로 알림 받기
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="notificationSMS" class="form-label">알림 SMS</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="notificationSMS" checked>
+                                                    <label class="form-check-label" for="notificationSMS">
+                                                        SMS로 알림 받기
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-save">설정 저장</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 수익 관리 탭 -->
+                            <div class="tab-pane fade" id="payments" role="tabpanel">
+                                <div class="account-content">
+                                    <h2>수익 관리</h2>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>1,240,000원</h3>
+                                                <p>이번 달 수익</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>12,500,000원</h3>
+                                                <p>총 수익</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="stats-card">
+                                                <h3>3</h3>
+                                                <p>이번 달 워크샵</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 class="mb-3">수익 내역</h3>
+                                    
+                                    <div class="payment-history">
+                                        <div class="payment-item">
+                                            <h3>트렌디한 목적별티 블렌딩</h3>
+                                            <div class="payment-info">
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <span>2024년 4월 10일</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>12명 참가</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span class="payment-amount">620,000원</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <span class="payment-status paid">지급완료</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="payment-item">
+                                            <h3>내 마음을 색으로 표현하는 마음돌봄 페인팅</h3>
+                                            <div class="payment-info">
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <span>2024년 4월 5일</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>15명 참가</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span class="payment-amount">440,000원</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <span class="payment-status paid">지급완료</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="payment-item">
+                                            <h3>늘 갖고 다니는 휴대폰 악세사리에 추억을 담아</h3>
+                                            <div class="payment-info">
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <span>2024년 4월 1일</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-users"></i>
+                                                    <span>10명 참가</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <i class="fas fa-won-sign"></i>
+                                                    <span class="payment-amount">400,000원</span>
+                                                </div>
+                                                <div class="payment-info-item">
+                                                    <span class="payment-status paid">지급완료</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright">Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 드롭다운 메뉴 활성화
+        $(document).ready(function() {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
+</body>
+</html> 

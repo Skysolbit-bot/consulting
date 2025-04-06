@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 관리 - 강사 플랫폼</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">강사 플랫폼</a>
+                <ul class="nav-links">
+                    <li><a href="instructor-dashboard.html">대시보드</a></li>
+                    <li><a href="instructor-schedule.html">일정 관리</a></li>
+                    <li><a href="instructor-products.html" class="active">상품 관리</a></li>
+                    <li><a href="instructor-payment.html">정산 관리</a></li>
+                    <li><a href="instructor-profile.html">프로필</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="products-section">
+            <div class="section-header">
+                <h1>상품 관리</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <i class="fas fa-plus"></i> 새 상품 등록
+                    </button>
+                </div>
+            </div>
+
+            <!-- 상품 상태 필터 -->
+            <div class="product-filters">
+                <div class="filter-group">
+                    <label>상태 필터:</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">전체</button>
+                        <button class="filter-btn" data-filter="active">판매중</button>
+                        <button class="filter-btn" data-filter="inactive">판매중지</button>
+                        <button class="filter-btn" data-filter="pending">심사대기</button>
+                        <button class="filter-btn" data-filter="rejected">반려</button>
+                    </div>
+                </div>
+            </div>
+            <p>고객이 바로 자신이 원하는 워크샵 정보를 전달하기</p>
+
+            <div class="products-grid">
+                <!-- 상품 카드 예시 - 판매중 -->
+                <div class="product-card" data-status="active">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200" alt="상품 이미지">
+                        <span class="status-badge active">판매중</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>트렌디한 목적별티 블렌딩</h3>
+                        <p class="category">문화</p>
+                        <p class="price">620,000원</p>
+                        <p class="participants">93명 참여 | 10~100명</p>
+                        <div class="product-actions">
+                            <button class="btn btn-outline" onclick="editProduct(1)">수정</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(1)">삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상품 카드 예시 - 판매중지 -->
+                <div class="product-card" data-status="inactive">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200" alt="상품 이미지">
+                        <span class="status-badge inactive">판매중지</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>내 마음을 색으로 표현하는 마음돌봄 페인팅</h3>
+                        <p class="category">심리</p>
+                        <p class="price">440,000원</p>
+                        <p class="participants">121명 참여 | 10~100명</p>
+                        <div class="product-actions">
+                            <button class="btn btn-outline" onclick="editProduct(2)">수정</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(2)">삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상품 카드 예시 - 심사대기 -->
+                <div class="product-card" data-status="pending">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200" alt="상품 이미지">
+                        <span class="status-badge pending">심사대기</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>나만의 향기 만들기 워크샵</h3>
+                        <p class="category">취미</p>
+                        <p class="price">350,000원</p>
+                        <p class="participants">0명 참여 | 5~20명</p>
+                        <p class="review-info">심사 예상 완료일: 2025-04-09</p>
+                        <div class="product-actions">
+                            <button class="btn btn-outline" onclick="editProduct(3)">수정</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(3)">삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상품 카드 예시 - 반려 -->
+                <div class="product-card" data-status="rejected">
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/300x200" alt="상품 이미지">
+                        <span class="status-badge rejected">반려</span>
+                    </div>
+                    <div class="product-info">
+                        <h3>요가 명상 클래스</h3>
+                        <p class="category">힐링</p>
+                        <p class="price">280,000원</p>
+                        <p class="participants">0명 참여 | 3~15명</p>
+                        <p class="rejection-reason">반려 사유: 상품 설명이 불충분합니다. 더 자세한 커리큘럼을 추가해주세요.</p>
+                        <div class="product-actions">
+                            <button class="btn btn-outline" onclick="editProduct(4)">수정</button>
+                            <button class="btn btn-danger" onclick="deleteProduct(4)">삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 상품 등록/수정 모달 -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">상품 등록</h2>
+                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="productForm" class="product-form">
+                <input type="hidden" id="productId" name="productId">
+                <input type="hidden" id="productStatus" name="productStatus" value="pending">
+                
+                <!-- 기본 정보 섹션 -->
+                <div class="form-section">
+                    <h3>기본 정보</h3>
+                    <div class="form-group">
+                        <label for="title">상품명 <span class="required">*</span></label>
+                        <input type="text" id="title" name="title" placeholder="상품명을 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subtitle">부제목</label>
+                        <input type="text" id="subtitle" name="subtitle" placeholder="부제목을 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">카테고리 <span class="required">*</span></label>
+                        <select id="category" name="category" required>
+                            <option value="">카테고리 선택</option>
+                            <option value="문화">문화</option>
+                            <option value="심리">심리</option>
+                            <option value="예술">예술</option>
+                            <option value="교육">교육</option>
+                            <option value="체험">체험</option>
+                            <option value="힐링">힐링</option>
+                            <option value="취미">취미</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">가격 <span class="required">*</span></label>
+                        <div class="price-input">
+                            <input type="number" id="price" name="price" placeholder="가격을 입력하세요" required>
+                            <span class="price-unit">원</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="minParticipants">최소 참여 인원 <span class="required">*</span></label>
+                            <input type="number" id="minParticipants" name="minParticipants" placeholder="최소 인원" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="maxParticipants">최대 참여 인원 <span class="required">*</span></label>
+                            <input type="number" id="maxParticipants" name="maxParticipants" placeholder="최대 인원" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="duration">소요 시간 <span class="required">*</span></label>
+                            <input type="text" id="duration" name="duration" placeholder="예: 2시간" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="location">장소</label>
+                            <input type="text" id="location" name="location" placeholder="장소를 입력하세요">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상품 설명 섹션 -->
+                <div class="form-section">
+                    <h3>상품 설명</h3>
+                    <div class="form-group">
+                        <label for="description">상품 소개 <span class="required">*</span></label>
+                        <textarea id="description" name="description" rows="5" placeholder="상품에 대한 간략한 소개를 입력하세요" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="curriculum">커리큘럼 <span class="required">*</span></label>
+                        <textarea id="curriculum" name="curriculum" rows="5" placeholder="상세한 커리큘럼을 입력하세요" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="preparation">준비물</label>
+                        <textarea id="preparation" name="preparation" rows="3" placeholder="참가자가 준비해야 할 물품을 입력하세요"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notice">유의사항</label>
+                        <textarea id="notice" name="notice" rows="3" placeholder="참가자에게 알려줄 유의사항을 입력하세요"></textarea>
+                    </div>
+                </div>
+
+                <!-- 이미지 및 추가 정보 섹션 -->
+                <div class="form-section">
+                    <h3>이미지 및 추가 정보</h3>
+                    <div class="form-group">
+                        <label for="image">대표 이미지 <span class="required">*</span></label>
+                        <div class="file-upload">
+                            <input type="file" id="image" name="image" accept="image/*" required>
+                            <div class="file-preview" id="imagePreview">
+                                <i class="fas fa-image"></i>
+                                <span>이미지 미리보기</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalImages">추가 이미지 (최대 5개)</label>
+                        <div class="file-upload">
+                            <input type="file" id="additionalImages" name="additionalImages" accept="image/*" multiple>
+                            <div class="file-preview" id="additionalImagesPreview">
+                                <i class="fas fa-images"></i>
+                                <span>추가 이미지 미리보기</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">태그</label>
+                        <input type="text" id="tags" name="tags" placeholder="쉼표로 구분하여 입력하세요 (예: 힐링, 명상, 스트레스해소)">
+                    </div>
+                </div>
+
+                <!-- 판매 설정 섹션 -->
+                <div class="form-section">
+                    <h3>판매 설정</h3>
+                    <div class="form-group">
+                        <label for="status">판매 상태</label>
+                        <select id="status" name="status">
+                            <option value="active">판매중</option>
+                            <option value="inactive">판매중지</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">판매 시작일</label>
+                        <input type="date" id="startDate" name="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">판매 종료일</label>
+                        <input type="date" id="endDate" name="endDate">
+                    </div>
+                </div>
+
+                <!-- 심사 정보 섹션 (수정 시에만 표시) -->
+                <div id="reviewSection" class="form-section" style="display: none;">
+                    <h3>심사 정보</h3>
+                    <div class="form-group">
+                        <label>현재 상태</label>
+                        <div class="status-display">
+                            <span id="currentStatus" class="status-badge pending">심사대기</span>
+                            <p id="reviewDate" class="review-date">심사 예상 완료일: 2025-04-09</p>
+                        </div>
+                    </div>
+                    <div id="rejectionReasonGroup" class="form-group" style="display: none;">
+                        <label>반려 사유</label>
+                        <div class="rejection-reason-box">
+                            <p id="rejectionReason">상품 설명이 불충분합니다. 더 자세한 커리큘럼을 추가해주세요.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">등록</button>
+                    <button type="button" class="btn btn-outline" onclick="closeProductModal()">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 상품 미리보기 모달 -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>상품 미리보기</h2>
+                <button class="close-btn" onclick="closePreviewModal()">&times;</button>
+            </div>
+            <div class="preview-content">
+                <div class="preview-image">
+                    <img id="previewImage" src="https://via.placeholder.com/800x400" alt="상품 미리보기">
+                </div>
+                <div class="preview-info">
+                    <h3 id="previewTitle">상품명</h3>
+                    <p id="previewSubtitle" class="preview-subtitle">부제목</p>
+                    <p id="previewCategory" class="preview-category">카테고리</p>
+                    <p id="previewPrice" class="preview-price">0원</p>
+                    <p id="previewParticipants" class="preview-participants">0명 참여 | 0~0명</p>
+                    <p id="previewDuration" class="preview-duration">소요 시간: 0시간</p>
+                    <p id="previewLocation" class="preview-location">장소: 미정</p>
+                </div>
+                <div class="preview-description">
+                    <h4>상품 소개</h4>
+                    <p id="previewDescription">상품 소개 내용이 여기에 표시됩니다.</p>
+                    
+                    <h4>커리큘럼</h4>
+                    <p id="previewCurriculum">커리큘럼 내용이 여기에 표시됩니다.</p>
+                    
+                    <h4>준비물</h4>
+                    <p id="previewPreparation">준비물 내용이 여기에 표시됩니다.</p>
+                    
+                    <h4>유의사항</h4>
+                    <p id="previewNotice">유의사항 내용이 여기에 표시됩니다.</p>
+                </div>
+            </div>
+            <div class="preview-actions">
+                <button class="btn btn-primary" onclick="submitProduct()">등록하기</button>
+                <button class="btn btn-outline" onclick="closePreviewModal()">수정하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 상품 데이터 (실제로는 서버에서 가져올 데이터)
+        const products = [
+            {
+                id: 1,
+                title: "트렌디한 목적별티 블렌딩",
+                subtitle: "나만의 특별한 차를 만들어보세요",
+                category: "문화",
+                price: 620000,
+                minParticipants: 10,
+                maxParticipants: 100,
+                participants: 93,
+                duration: "2시간",
+                location: "서울시 강남구",
+                description: "트렌디한 목적별티 블렌딩 클래스에서는 다양한 허브와 차 재료를 활용하여 나만의 특별한 차를 만드는 방법을 배웁니다. 전문 강사의 지도 아래 건강과 미용에 도움이 되는 다양한 블렌딩 레시피를 실습하고, 가져갈 수 있습니다.",
+                curriculum: "1. 차와 허브의 기본 지식 (30분)\n2. 블렌딩 원리와 기법 설명 (30분)\n3. 실전 블렌딩 실습 (60분)\n4. 시음 및 피드백 (30분)",
+                preparation: "필요 없음 (모든 재료 제공)",
+                notice: "참가 3일 전 취소 시 100% 환불, 당일 취소 시 환불 불가",
+                image: "https://via.placeholder.com/300x200",
+                additionalImages: [],
+                tags: "차,허브,블렌딩,힐링,취미",
+                status: "active",
+                startDate: "2025-01-01",
+                endDate: "2025-12-31"
+            },
+            {
+                id: 2,
+                title: "내 마음을 색으로 표현하는 마음돌봄 페인팅",
+                subtitle: "색감으로 내면의 감정을 표현해보세요",
+                category: "심리",
+                price: 440000,
+                minParticipants: 10,
+                maxParticipants: 100,
+                participants: 121,
+                duration: "3시간",
+                location: "서울시 서초구",
+                description: "내 마음을 색으로 표현하는 마음돌봄 페인팅은 색감과 붓놀임으로 내면의 감정을 자유롭게 표현하는 심리 예술 프로그램입니다. 전문 심리 상담사의 지도 아래 자신의 감정을 색으로 표현하고, 그 과정에서 내면의 자아를 발견하고 치유하는 경험을 할 수 있습니다.",
+                curriculum: "1. 색의 심리학과 감정의 관계 (30분)\n2. 내면의 감정 탐색 (30분)\n3. 자유 페인팅 실습 (90분)\n4. 작품 해석 및 공유 (30분)",
+                preparation: "필요 없음 (모든 재료 제공)",
+                notice: "참가 3일 전 취소 시 100% 환불, 당일 취소 시 환불 불가",
+                image: "https://via.placeholder.com/300x200",
+                additionalImages: [],
+                tags: "심리,예술,페인팅,힐링,자아발견",
+                status: "inactive",
+                startDate: "2025-01-01",
+                endDate: "2025-12-31"
+            },
+            {
+                id: 3,
+                title: "나만의 향기 만들기 워크샵",
+                subtitle: "당신만의 특별한 향기를 만들어보세요",
+                category: "취미",
+                price: 350000,
+                minParticipants: 5,
+                maxParticipants: 20,
+                participants: 0,
+                duration: "2시간 30분",
+                location: "서울시 마포구",
+                description: "나만의 향기 만들기 워크샵에서는 다양한 에센셜 오일과 향료를 활용하여 자신만의 특별한 향수를 만드는 방법을 배웁니다. 전문 향수 디자이너의 지도 아래 자신의 취향과 성격에 맞는 향수를 제작하고, 가져갈 수 있습니다.",
+                curriculum: "1. 향수의 기본 지식 (30분)\n2. 향료의 특성과 조합 원리 (30분)\n3. 실전 향수 제작 실습 (60분)\n4. 시향 및 피드백 (30분)",
+                preparation: "필요 없음 (모든 재료 제공)",
+                notice: "참가 3일 전 취소 시 100% 환불, 당일 취소 시 환불 불가",
+                image: "https://via.placeholder.com/300x200",
+                additionalImages: [],
+                tags: "향수,에센셜오일,취미,힐링,자기표현",
+                status: "pending",
+                startDate: "2025-05-01",
+                endDate: "2025-12-31",
+                reviewDate: "2025-04-09"
+            },
+            {
+                id: 4,
+                title: "요가 명상 클래스",
+                subtitle: "몸과 마음의 균형을 찾아보세요",
+                category: "힐링",
+                price: 280000,
+                minParticipants: 3,
+                maxParticipants: 15,
+                participants: 0,
+                duration: "1시간 30분",
+                location: "서울시 종로구",
+                description: "요가 명상 클래스는 요가 자세와 호흡법을 통해 몸과 마음의 균형을 찾는 프로그램입니다. 전문 요가 강사의 지도 아래 기본적인 요가 자세와 명상 기법을 배우고, 일상에서 스트레스를 해소하고 건강을 증진하는 방법을 익힐 수 있습니다.",
+                curriculum: "1. 요가 기본 자세 (30분)\n2. 호흡법과 명상 기법 (30분)\n3. 요가 플로우 실습 (30분)",
+                preparation: "요가 매트, 편안한 운동복",
+                notice: "참가 3일 전 취소 시 100% 환불, 당일 취소 시 환불 불가",
+                image: "https://via.placeholder.com/300x200",
+                additionalImages: [],
+                tags: "요가,명상,힐링,건강,스트레스해소",
+                status: "rejected",
+                startDate: "2025-05-01",
+                endDate: "2025-12-31",
+                rejectionReason: "상품 설명이 불충분합니다. 더 자세한 커리큘럼을 추가해주세요."
+            }
+        ];
+
+        // 상품 필터링 기능
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // 활성 버튼 변경
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 상품 필터링
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.product-card').forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-status') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        function showAddProductModal() {
+            document.getElementById('modalTitle').textContent = '상품 등록';
+            document.getElementById('productModal').style.display = 'block';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productStatus').value = 'pending';
+            document.getElementById('reviewSection').style.display = 'none';
+            document.getElementById('submitBtn').textContent = '등록';
+            document.getElementById('imagePreview').innerHTML = '<i class="fas fa-image"></i><span>이미지 미리보기</span>';
+            document.getElementById('additionalImagesPreview').innerHTML = '<i class="fas fa-images"></i><span>추가 이미지 미리보기</span>';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        function editProduct(id) {
+            // 상품 데이터 가져오기
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            
+            // 모달 제목 변경
+            document.getElementById('modalTitle').textContent = '상품 수정';
+            
+            // 폼에 데이터 채우기
+            document.getElementById('productId').value = product.id;
+            document.getElementById('title').value = product.title;
+            document.getElementById('subtitle').value = product.subtitle;
+            document.getElementById('category').value = product.category;
+            document.getElementById('price').value = product.price;
+            document.getElementById('minParticipants').value = product.minParticipants;
+            document.getElementById('maxParticipants').value = product.maxParticipants;
+            document.getElementById('duration').value = product.duration;
+            document.getElementById('location').value = product.location;
+            document.getElementById('description').value = product.description;
+            document.getElementById('curriculum').value = product.curriculum;
+            document.getElementById('preparation').value = product.preparation;
+            document.getElementById('notice').value = product.notice;
+            document.getElementById('tags').value = product.tags;
+            document.getElementById('status').value = product.status;
+            document.getElementById('startDate').value = product.startDate;
+            document.getElementById('endDate').value = product.endDate;
+            
+            // 이미지 미리보기 설정
+            document.getElementById('imagePreview').innerHTML = `<img src="${product.image}" alt="미리보기">`;
+            
+            // 심사 정보 섹션 표시 (심사대기 또는 반려 상태인 경우)
+            if (product.status === 'pending' || product.status === 'rejected') {
+                document.getElementById('reviewSection').style.display = 'block';
+                document.getElementById('currentStatus').className = `status-badge ${product.status}`;
+                document.getElementById('currentStatus').textContent = product.status === 'pending' ? '심사대기' : '반려';
+                
+                if (product.status === 'pending') {
+                    document.getElementById('reviewDate').textContent = `심사 예상 완료일: ${product.reviewDate}`;
+                    document.getElementById('rejectionReasonGroup').style.display = 'none';
+                } else {
+                    document.getElementById('reviewDate').textContent = '';
+                    document.getElementById('rejectionReasonGroup').style.display = 'block';
+                    document.getElementById('rejectionReason').textContent = product.rejectionReason;
+                }
+            } else {
+                document.getElementById('reviewSection').style.display = 'none';
+            }
+            
+            // 제출 버튼 텍스트 변경
+            document.getElementById('submitBtn').textContent = '수정';
+            
+            // 모달 표시
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        function deleteProduct(id) {
+            if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
+                // 상품 삭제 로직 구현
+                alert('상품이 삭제되었습니다.');
+            }
+        }
+        
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target == modal) {
+                closeProductModal();
+            }
+            
+            const previewModal = document.getElementById('previewModal');
+            if (event.target == previewModal) {
+                closePreviewModal();
+            }
+        }
+
+        // 폼 제출 처리
+        document.getElementById('productForm').onsubmit = function(e) {
+            e.preventDefault();
+            
+            // 폼 데이터 수집
+            const formData = new FormData(this);
+            const productId = formData.get('productId');
+            
+            // 미리보기 모달 표시
+            showPreviewModal(formData);
+        }
+        
+        // 미리보기 모달 표시
+        function showPreviewModal(formData) {
+            // 미리보기 데이터 설정
+            document.getElementById('previewTitle').textContent = formData.get('title');
+            document.getElementById('previewSubtitle').textContent = formData.get('subtitle');
+            document.getElementById('previewCategory').textContent = formData.get('category');
+            document.getElementById('previewPrice').textContent = formData.get('price') + '원';
+            document.getElementById('previewParticipants').textContent = `0명 참여 | ${formData.get('minParticipants')}~${formData.get('maxParticipants')}명`;
+            document.getElementById('previewDuration').textContent = `소요 시간: ${formData.get('duration')}`;
+            document.getElementById('previewLocation').textContent = `장소: ${formData.get('location') || '미정'}`;
+            document.getElementById('previewDescription').textContent = formData.get('description');
+            document.getElementById('previewCurriculum').textContent = formData.get('curriculum');
+            document.getElementById('previewPreparation').textContent = formData.get('preparation') || '준비물 없음';
+            document.getElementById('previewNotice').textContent = formData.get('notice') || '유의사항 없음';
+            
+            // 이미지 미리보기
+            const imageFile = document.getElementById('image').files[0];
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                }
+                reader.readAsDataURL(imageFile);
+            }
+            
+            // 미리보기 모달 표시
+            document.getElementById('previewModal').style.display = 'block';
+        }
+
+        // 미리보기 모달 닫기
+        function closePreviewModal() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // 상품 등록/수정 제출
+        function submitProduct() {
+            const productId = document.getElementById('productId').value;
+            const isNewProduct = !productId;
+            
+            // 실제로는 서버에 데이터를 전송하는 코드가 들어갈 것입니다.
+            // 여기서는 간단한 알림만 표시합니다.
+            
+            if (isNewProduct) {
+                alert('상품이 등록되었습니다. 심사는 최소 5일이 소요됩니다.');
+            } else {
+                alert('상품이 수정되었습니다.');
+            }
+            
+            // 모달 닫기
+            closePreviewModal();
+            closeProductModal();
+            
+            // 페이지 새로고침 (실제로는 상품 목록만 업데이트)
+            // location.reload();
+        }
+        
+        // 이미지 미리보기 기능
+        document.getElementById('image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').innerHTML = `<img src="${e.target.result}" alt="미리보기">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('additionalImages').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                let previewHTML = '';
+                for (let i = 0; i < Math.min(files.length, 5); i++) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewHTML += `<div class="preview-item"><img src="${e.target.result}" alt="추가 이미지 ${i+1}"></div>`;
+                        document.getElementById('additionalImagesPreview').innerHTML = previewHTML;
+                    }
+                    reader.readAsDataURL(files[i]);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

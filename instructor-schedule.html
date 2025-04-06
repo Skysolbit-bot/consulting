@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국커리어개발원 - 강사 일정 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+        }
+        
+        .schedule-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .schedule-header {
+            margin-bottom: 30px;
+        }
+        
+        .schedule-header h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+        
+        .schedule-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .schedule-card h3 {
+            color: #3a86ff;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #3a86ff;
+            padding-bottom: 10px;
+        }
+        
+        .calendar {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #3a86ff;
+            cursor: pointer;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 5px;
+            position: relative;
+        }
+        
+        .calendar-day.today {
+            background-color: #e7f1ff;
+            border-color: #3a86ff;
+        }
+        
+        .calendar-day.has-event {
+            background-color: #f0f8ff;
+        }
+        
+        .calendar-day-number {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .calendar-day-event {
+            font-size: 0.7rem;
+            background-color: #3a86ff;
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-weight: 500;
+            color: #666;
+            padding: 5px;
+        }
+        
+        .schedule-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .schedule-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+        
+        .schedule-date {
+            font-weight: 500;
+            color: #3a86ff;
+            min-width: 100px;
+        }
+        
+        .schedule-time {
+            color: #666;
+            min-width: 100px;
+        }
+        
+        .schedule-title {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        
+        .schedule-location {
+            color: #666;
+            min-width: 150px;
+        }
+        
+        .schedule-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn-add-schedule {
+            background-color: #3a86ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-add-schedule:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+        }
+        
+        .btn-filter {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-filter:hover, .btn-filter.active {
+            background-color: #e7f1ff;
+            border-color: #3a86ff;
+            color: #3a86ff;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        footer h5 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        footer p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="한국커리어개발원 로고">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshops.html">워크샵</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            내계정
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="instructor-dashboard.html">대시보드</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item active" href="instructor-schedule.html">월별/일정</a></li>
+                            <li><a class="dropdown-item" href="instructor-payment.html">정산</a></li>
+                            <li><a class="dropdown-item" href="instructor-profile.html">정보수정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="instructor-company.html">회사등록</a></li>
+                            <li><a class="dropdown-item" href="instructor-register.html">강사등록</a></li>
+                            <li><a class="dropdown-item" href="instructor-products.html">상품등록</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="schedule-container">
+        <div class="schedule-header">
+            <h1>일정 관리</h1>
+            <p>월별 일정을 확인하고 관리하세요.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-title">2025년 4월</div>
+                        <div class="calendar-nav">
+                            <button><i class="fas fa-chevron-left"></i></button>
+                            <button><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-weekday">일</div>
+                        <div class="calendar-weekday">월</div>
+                        <div class="calendar-weekday">화</div>
+                        <div class="calendar-weekday">수</div>
+                        <div class="calendar-weekday">목</div>
+                        <div class="calendar-weekday">금</div>
+                        <div class="calendar-weekday">토</div>
+                        
+                        <!-- 4월 1일이 화요일부터 시작한다고 가정 -->
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">1</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">2</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">3</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">4</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">5</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">6</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">7</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">8</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">9</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">10</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">11</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">12</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">13</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">14</div>
+                        </div>
+                        <div class="calendar-day has-event">
+                            <div class="calendar-day-number">15</div>
+                            <div class="calendar-day-event">협동 실내 컬링</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">16</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">17</div>
+                        </div>
+                        <div class="calendar-day has-event">
+                            <div class="calendar-day-number">18</div>
+                            <div class="calendar-day-event">네온사인 키트</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">19</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">20</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">21</div>
+                        </div>
+                        <div class="calendar-day has-event">
+                            <div class="calendar-day-number">22</div>
+                            <div class="calendar-day-event">앙금 플라워 케이크</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">23</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">24</div>
+                        </div>
+                        <div class="calendar-day has-event">
+                            <div class="calendar-day-number">25</div>
+                            <div class="calendar-day-event">크리스마스 콘트리</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">26</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">27</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">28</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">29</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="calendar-day-number">30</div>
+                        </div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                        <div class="calendar-day"></div>
+                    </div>
+                </div>
+                
+                <div class="schedule-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>이번 달 일정</h3>
+                        <button class="btn btn-add-schedule">
+                            <i class="fas fa-plus me-2"></i>새 일정 추가
+                        </button>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button class="btn-filter active">전체</button>
+                        <button class="btn-filter">이번 주</button>
+                        <button class="btn-filter">다음 주</button>
+                        <button class="btn-filter">이번 달</button>
+                    </div>
+                    
+                    <ul class="schedule-list">
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 15일</div>
+                            <div class="schedule-time">10:00 - 12:00</div>
+                            <div class="schedule-title">협동 실내 컬링</div>
+                            <div class="schedule-location">서울 강남</div>
+                            <div class="schedule-actions">
+                                <button class="btn btn-sm btn-outline-primary" data-workshop-title="협동 실내 컬링"><i class="fas fa-info-circle"></i> 자세히 보기</button>
+                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 18일</div>
+                            <div class="schedule-time">14:00 - 16:00</div>
+                            <div class="schedule-title">네온사인 키트</div>
+                            <div class="schedule-location">서울 마포</div>
+                            <div class="schedule-actions">
+                                <button class="btn btn-sm btn-outline-primary" data-workshop-title="네온사인 키트"><i class="fas fa-info-circle"></i> 자세히 보기</button>
+                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 22일</div>
+                            <div class="schedule-time">13:00 - 15:00</div>
+                            <div class="schedule-title">앙금 플라워 케이크</div>
+                            <div class="schedule-location">서울 서초</div>
+                            <div class="schedule-actions">
+                                <button class="btn btn-sm btn-outline-primary" data-workshop-title="앙금 플라워 케이크"><i class="fas fa-info-circle"></i> 자세히 보기</button>
+                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 25일</div>
+                            <div class="schedule-time">11:00 - 13:00</div>
+                            <div class="schedule-title">크리스마스 콘트리</div>
+                            <div class="schedule-location">서울 송파</div>
+                            <div class="schedule-actions">
+                                <button class="btn btn-sm btn-outline-primary" data-workshop-title="크리스마스 콘트리"><i class="fas fa-info-circle"></i> 자세히 보기</button>
+                                <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="schedule-card">
+                    <h3>일정 통계</h3>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 mb-4">
+                            <div class="stat-card">
+                                <i class="fas fa-calendar-check text-primary"></i>
+                                <h4>12</h4>
+                                <p>이번 달 워크샵</p>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-4">
+                            <div class="stat-card">
+                                <i class="fas fa-users text-primary"></i>
+                                <h4>245</h4>
+                                <p>총 참가자</p>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-4">
+                            <div class="stat-card">
+                                <i class="fas fa-clock text-primary"></i>
+                                <h4>24</h4>
+                                <p>총 시간</p>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-4">
+                            <div class="stat-card">
+                                <i class="fas fa-won-sign text-primary"></i>
+                                <h4>2,450,000</h4>
+                                <p>예상 수익</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="schedule-card">
+                    <h3>다가오는 일정</h3>
+                    <ul class="schedule-list">
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 15일</div>
+                            <div class="schedule-title">협동 실내 컬링</div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 18일</div>
+                            <div class="schedule-title">네온사인 키트</div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 22일</div>
+                            <div class="schedule-title">앙금 플라워 케이크</div>
+                        </li>
+                        <li class="schedule-item">
+                            <div class="schedule-date">4월 25일</div>
+                            <div class="schedule-title">크리스마스 콘트리</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright">Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    // 페이지 로드 시 함수가 정의되었는지 확인
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("페이지 로드됨, showWorkshopDetails 함수 확인:", typeof showWorkshopDetails);
+        
+        // 자세히 보기 버튼에 이벤트 리스너 추가
+        const detailButtons = document.querySelectorAll('.btn-outline-primary[onclick*="showWorkshopDetails"]');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const workshopTitle = this.getAttribute('data-workshop-title');
+                showWorkshopDetails(workshopTitle);
+            });
+        });
+    });
+    
+    function showWorkshopDetails(workshopTitle) {
+        console.log("자세히 보기 버튼 클릭됨:", workshopTitle);
+        
+        // 워크샵 정보 데이터
+        const workshopData = {
+            "협동 실내 컬링": {
+                date: "4월 15일",
+                time: "10:00 - 12:00",
+                location: "서울 강남",
+                participants: "20명",
+                status: "예정됨",
+                description: "실내에서 즐기는 컬링 체험 워크샵입니다. 팀워크와 전략적 사고를 배울 수 있습니다."
+            },
+            "네온사인 키트": {
+                date: "4월 18일",
+                time: "14:00 - 16:00",
+                location: "서울 마포",
+                participants: "15명",
+                status: "예정됨",
+                description: "네온사인 키트를 직접 만들어보는 워크샵입니다. 창의적인 디자인과 실용적인 제작 방법을 배울 수 있습니다."
+            },
+            "앙금 플라워 케이크": {
+                date: "4월 22일",
+                time: "13:00 - 15:00",
+                location: "서울 서초",
+                participants: "12명",
+                status: "예정됨",
+                description: "앙금으로 예쁜 꽃을 만들고 케이크에 장식하는 워크샵입니다. 디저트 제작과 장식 기술을 배울 수 있습니다."
+            },
+            "크리스마스 콘트리": {
+                date: "4월 25일",
+                time: "11:00 - 13:00",
+                location: "서울 송파",
+                participants: "18명",
+                status: "예정됨",
+                description: "크리스마스 테마의 장식을 직접 만들어보는 워크샵입니다. 계절별 인테리어 아이디어를 얻을 수 있습니다."
+            }
+        };
+        
+        // 워크샵 데이터 가져오기
+        const workshop = workshopData[workshopTitle] || {
+            date: "정보 없음",
+            time: "정보 없음",
+            location: "정보 없음",
+            participants: "정보 없음",
+            status: "정보 없음",
+            description: "이 워크샵에 대한 상세 정보가 없습니다."
+        };
+        
+        // 워크샵 상세 정보를 보여주는 모달 생성
+        const modal = document.createElement('div');
+        modal.className = 'modal fade';
+        modal.id = 'workshopDetailsModal';
+        modal.setAttribute('tabindex', '-1');
+        modal.setAttribute('aria-labelledby', 'workshopDetailsModalLabel');
+        modal.setAttribute('aria-hidden', 'true');
+        
+        modal.innerHTML = `
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="workshopDetailsModalLabel">${workshopTitle} 상세 정보</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="workshop-details">
+                            <p><strong>일시:</strong> ${workshop.date} ${workshop.time}</p>
+                            <p><strong>장소:</strong> ${workshop.location}</p>
+                            <p><strong>참가 인원:</strong> ${workshop.participants}</p>
+                            <p><strong>상태:</strong> ${workshop.status}</p>
+                            <p><strong>설명:</strong> ${workshop.description}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        try {
+            const modalInstance = new bootstrap.Modal(modal);
+            modalInstance.show();
+            
+            // 모달이 닫힐 때 DOM에서 제거
+            modal.addEventListener('hidden.bs.modal', function () {
+                document.body.removeChild(modal);
+            });
+        } catch (error) {
+            console.error("모달 표시 중 오류 발생:", error);
+            alert("워크샵 상세 정보를 표시하는 중 오류가 발생했습니다.");
+        }
+    }
+    </script>
+</body>
+</html> 

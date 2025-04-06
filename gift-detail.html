@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선물/서비스 상세 - 이너트립</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .gift-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+        .review-card {
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="이너트립 로고" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="workshopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            워크샵
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="workshopDropdown">
+                            <li><a class="dropdown-item" href="workshops.html">워크샵 목록</a></li>
+                            <li><a class="dropdown-item" href="workshop-planning.html">워크샵 기획하기</a></li>
+                            <li><a class="dropdown-item" href="workshop-templates.html">워크샵 템플릿</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div id="giftDetail">
+            <!-- 선물/서비스 상세 정보는 JavaScript로 동적 생성됩니다 -->
+        </div>
+    </div>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>jobkcd@naver.com</p>
+                    <p>070-7728-0403</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>jobkcd@naver.com</p>
+                    <p>070-4473-0796</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>070-7728-0403</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>(주)이너트립</strong> (대표: 김두현)</p>
+                    <p>인천광역시 부평구 부평대로 293, 903호</p>
+                    <p>사업자 등록번호: 111-81-35638</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>Copyright © 2019-2025 이너트립. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // 선물/서비스 데이터
+        const gifts = {
+            gift1: {
+                name: "프리미엄 간식 박스",
+                category: "간식/다과",
+                mainImage: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=800",
+                gallery: [
+                    "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=800",
+                    "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800",
+                    "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800"
+                ],
+                price: "15,000원 / 인",
+                description: "고급 과자, 견과류, 음료로 구성된 프리미엄 간식 세트입니다. 워크샵이나 회의 시 참석자들에게 제공하기 좋은 구성으로 준비되어 있습니다.",
+                details: [
+                    "신선한 재료로 만든 수제 과자",
+                    "프리미엄 견과류 믹스",
+                    "유기농 음료",
+                    "개별 포장으로 위생적",
+                    "최소 주문 수량: 10인분"
+                ],
+                reviews: [
+                    {
+                        name: "김**",
+                        rating: 5,
+                        content: "과자 구성이 알차고 맛있어요. 직원들 반응이 좋았습니다."
+                    },
+                    {
+                        name: "이**",
+                        rating: 4,
+                        content: "포장이 깔끔하고 개별 포장이라 좋았어요."
+                    }
+                ]
+            },
+            gift2: {
+                name: "도시락 케이터링",
+                category: "식사",
+                mainImage: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800",
+                gallery: [
+                    "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800",
+                    "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800"
+                ],
+                price: "25,000원 / 인",
+                description: "신선한 재료로 만든 건강한 도시락 서비스입니다. 다양한 메뉴 구성으로 모든 참가자들의 입맛을 만족시켜드립니다.",
+                details: [
+                    "메인 요리 + 반찬 4종 + 국",
+                    "채식주의자 옵션 가능",
+                    "알레르기 대응 가능",
+                    "최소 주문 수량: 20인분",
+                    "행사 2일 전까지 주문 가능"
+                ],
+                reviews: [
+                    {
+                        name: "박**",
+                        rating: 5,
+                        content: "음식 퀄리티가 좋고 포장도 깔끔해요."
+                    }
+                ]
+            },
+            gift3: {
+                name: "에코 기프트 세트",
+                category: "기념품",
+                mainImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800",
+                gallery: [
+                    "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800"
+                ],
+                price: "35,000원 / 세트",
+                description: "친환경 텀블러와 에코백으로 구성된 기념품 세트입니다. 실용성과 환경 보호를 동시에 실천할 수 있는 선물입니다.",
+                details: [
+                    "스테인리스 텀블러 500ml",
+                    "유기농 면 에코백",
+                    "로고 각인 서비스 가능",
+                    "최소 주문 수량: 10세트",
+                    "주문 후 1주일 소요"
+                ],
+                reviews: [
+                    {
+                        name: "최**",
+                        rating: 5,
+                        content: "퀄리티가 좋고 로고 각인도 깔끔하게 잘 됐어요."
+                    }
+                ]
+            }
+            // 나머지 선물/서비스 데이터...
+        };
+
+        // URL에서 선물/서비스 ID 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const giftId = urlParams.get('id');
+        
+        // 해당 선물/서비스 정보 가져오기
+        const gift = gifts[giftId];
+        
+        if (gift) {
+            // 선물/서비스 상세 정보 HTML 생성
+            const detailHtml = `
+                <div class="row">
+                    <div class="col-md-8">
+                        <img src="${gift.mainImage}" class="img-fluid rounded mb-4" alt="${gift.name}">
+                        <h2 class="mb-4">${gift.name}</h2>
+                        <span class="badge bg-primary mb-3">${gift.category}</span>
+                        
+                        <div class="mb-4">
+                            <h4>상품 소개</h4>
+                            <p>${gift.description}</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4>상세 정보</h4>
+                            <ul class="list-group list-group-flush">
+                                ${gift.details.map(detail => `
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-primary me-2"></i>${detail}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4>상품 사진</h4>
+                            <div class="row gift-gallery">
+                                ${gift.gallery.map(img => `
+                                    <div class="col-md-4">
+                                        <img src="${img}" class="img-fluid" alt="상품 사진">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4>이용 후기</h4>
+                            ${gift.reviews.map(review => `
+                                <div class="card review-card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="card-subtitle mb-2 text-muted">${review.name}</h6>
+                                            <div class="text-warning">
+                                                ${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}
+                                            </div>
+                                        </div>
+                                        <p class="card-text">${review.content}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card sticky-top" style="top: 2rem;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-4">주문 정보</h5>
+                                <p><strong>카테고리:</strong> ${gift.category}</p>
+                                <p><strong>가격:</strong> ${gift.price}</p>
+                                <hr>
+                                <div class="mb-3">
+                                    <label for="quantity" class="form-label">수량</label>
+                                    <input type="number" class="form-control" id="quantity" min="1" value="1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">희망 날짜</label>
+                                    <input type="date" class="form-control" id="date">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">요청사항</label>
+                                    <textarea class="form-control" id="message" rows="3"></textarea>
+                                </div>
+                                <button class="btn btn-primary w-100 mb-2" onclick="handleOrder()">주문하기</button>
+                                <button class="btn btn-outline-primary w-100" onclick="handleInquiry()">문의하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('giftDetail').innerHTML = detailHtml;
+        } else {
+            document.getElementById('giftDetail').innerHTML = '<div class="alert alert-danger">해당 상품을 찾을 수 없습니다.</div>';
+        }
+
+        // 주문하기 처리
+        function handleOrder() {
+            const quantity = document.getElementById('quantity').value;
+            const date = document.getElementById('date').value;
+            const message = document.getElementById('message').value;
+
+            if (!date) {
+                alert('희망 날짜를 선택해주세요.');
+                return;
+            }
+
+            alert('주문이 접수되었습니다. 담당자 확인 후 연락드리겠습니다.');
+        }
+
+        // 문의하기 처리
+        function handleInquiry() {
+            alert('문의가 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.');
+        }
+    </script>
+</body>
+</html> 

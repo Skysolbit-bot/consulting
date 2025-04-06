@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 계정 - 한국커리어개발원</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #38b000;
+            --info-color: #3a86ff;
+            --warning-color: #ffbe0b;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--dark-color);
+            background-color: #f9f9f9;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand img {
+            transition: transform 0.3s ease;
+            height: 50px;
+        }
+        
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #2d8a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(56, 176, 0, 0.3);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-header h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .account-sidebar {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .account-sidebar .nav-link {
+            color: var(--dark-color);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .account-sidebar .nav-link:hover {
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+        
+        .account-sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .account-sidebar .nav-link i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .profile-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .profile-info h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-info p {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat h4 {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .profile-stat p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .account-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+        }
+        
+        .account-section h3 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        footer p {
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer hr {
+            margin: 2rem 0;
+            opacity: 0.2;
+        }
+        
+        .copyright {
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 2rem 0;
+                margin-bottom: 2rem;
+            }
+            
+            .account-sidebar {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="한국커리어개발원 로고">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="workshopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            워크샵
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="workshopDropdown">
+                            <li><a class="dropdown-item" href="workshops.html">워크샵 목록</a></li>
+                            <li><a class="dropdown-item" href="workshop-planning.html">워크샵 기획하기</a></li>
+                            <li><a class="dropdown-item" href="workshop-templates.html">워크샵 템플릿</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            소개
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="about.html">회사 소개</a></li>
+                            <li><a class="dropdown-item" href="team.html">팀 소개</a></li>
+                            <li><a class="dropdown-item" href="partners.html">파트너</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="supportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            고객지원
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="supportDropdown">
+                            <li><a class="dropdown-item" href="faq.html">자주 묻는 질문</a></li>
+                            <li><a class="dropdown-item" href="contact.html">문의하기</a></li>
+                            <li><a class="dropdown-item" href="support.html">고객센터</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            내 계정
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item active" href="my-account.html">내 정보</a></li>
+                            <li><a class="dropdown-item" href="my-workshops.html">내 워크샵</a></li>
+                            <li><a class="dropdown-item" href="my-bookings.html">예약 내역</a></li>
+                            <li><a class="dropdown-item" href="my-favorites.html">찜 목록</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="settings.html">설정</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그아웃</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>내 계정</h1>
+            <p>계정 정보 및 설정을 관리하세요</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="account-sidebar">
+                    <div class="nav flex-column nav-pills" id="account-tab" role="tablist">
+                        <a class="nav-link active" id="profile-tab" data-bs-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="true">
+                            <i class="fas fa-user"></i> 프로필
+                        </a>
+                        <a class="nav-link" id="personal-tab" data-bs-toggle="pill" href="#personal" role="tab" aria-controls="personal" aria-selected="false">
+                            <i class="fas fa-id-card"></i> 개인 정보
+                        </a>
+                        <a class="nav-link" id="security-tab" data-bs-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
+                            <i class="fas fa-shield-alt"></i> 보안
+                        </a>
+                        <a class="nav-link" id="notifications-tab" data-bs-toggle="pill" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">
+                            <i class="fas fa-bell"></i> 알림 설정
+                        </a>
+                        <a class="nav-link" id="billing-tab" data-bs-toggle="pill" href="#billing" role="tab" aria-controls="billing" aria-selected="false">
+                            <i class="fas fa-credit-card"></i> 결제 정보
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content" id="account-tabContent">
+                    <!-- 프로필 탭 -->
+                    <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="profile-section">
+                            <div class="row align-items-center">
+                                <div class="col-md-3 text-center">
+                                    <img src="https://via.placeholder.com/120" alt="프로필 이미지" class="profile-image">
+                                    <button class="btn btn-outline-primary btn-sm mt-2">이미지 변경</button>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="profile-info">
+                                        <h3>홍길동</h3>
+                                        <p>hong@example.com</p>
+                                        <p>010-1234-5678</p>
+                                        <div class="profile-stats">
+                                            <div class="profile-stat">
+                                                <h4>12</h4>
+                                                <p>워크샵</p>
+                                            </div>
+                                            <div class="profile-stat">
+                                                <h4>5</h4>
+                                                <p>예약</p>
+                                            </div>
+                                            <div class="profile-stat">
+                                                <h4>8</h4>
+                                                <p>찜</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 개인 정보 탭 -->
+                    <div class="tab-pane fade" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                        <div class="account-section">
+                            <h3>개인 정보</h3>
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">이름</label>
+                                        <input type="text" class="form-control" value="홍길동">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">이메일</label>
+                                        <input type="email" class="form-control" value="hong@example.com">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">휴대폰 번호</label>
+                                        <input type="tel" class="form-control" value="010-1234-5678">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">생년월일</label>
+                                        <input type="date" class="form-control" value="1990-01-01">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">주소</label>
+                                    <input type="text" class="form-control mb-2" value="서울특별시 강남구 테헤란로 123">
+                                    <input type="text" class="form-control" placeholder="상세 주소">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">소속</label>
+                                    <input type="text" class="form-control" value="한국커리어개발원">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">직책</label>
+                                    <input type="text" class="form-control" value="팀장">
+                                </div>
+                                <button type="submit" class="btn btn-primary">저장하기</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- 보안 탭 -->
+                    <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                        <div class="account-section">
+                            <h3>비밀번호 변경</h3>
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label">현재 비밀번호</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">새 비밀번호</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">새 비밀번호 확인</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary">비밀번호 변경</button>
+                            </form>
+                        </div>
+                        
+                        <div class="account-section">
+                            <h3>2단계 인증</h3>
+                            <p>2단계 인증을 활성화하면 로그인 시 추가 보안 코드가 필요합니다.</p>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                                <label class="form-check-label" for="twoFactorAuth">2단계 인증 활성화</label>
+                            </div>
+                            <button class="btn btn-outline-primary">설정하기</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 알림 설정 탭 -->
+                    <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                        <div class="account-section">
+                            <h3>이메일 알림</h3>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNewsletter" checked>
+                                <label class="form-check-label" for="emailNewsletter">
+                                    뉴스레터 및 업데이트
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailPromotions" checked>
+                                <label class="form-check-label" for="emailPromotions">
+                                    프로모션 및 특별 할인
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailBookings" checked>
+                                <label class="form-check-label" for="emailBookings">
+                                    예약 확인 및 변경 알림
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">저장하기</button>
+                        </div>
+                        
+                        <div class="account-section">
+                            <h3>SMS 알림</h3>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="smsBookings" checked>
+                                <label class="form-check-label" for="smsBookings">
+                                    예약 확인 및 변경 알림
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="smsReminders">
+                                <label class="form-check-label" for="smsReminders">
+                                    워크샵 전날 리마인더
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">저장하기</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 결제 정보 탭 -->
+                    <div class="tab-pane fade" id="billing" role="tabpanel" aria-labelledby="billing-tab">
+                        <div class="account-section">
+                            <h3>결제 수단</h3>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fab fa-cc-visa fa-2x text-primary me-2"></i>
+                                            <span>Visa •••• 1234</span>
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-success">기본</span>
+                                            <button class="btn btn-sm btn-outline-danger ms-2">삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-primary">새 결제 수단 추가</button>
+                        </div>
+                        
+                        <div class="account-section">
+                            <h3>결제 내역</h3>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>날짜</th>
+                                            <th>항목</th>
+                                            <th>금액</th>
+                                            <th>상태</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2023-04-01</td>
+                                            <td>트렌디한 목적별티 블렌딩 워크샵</td>
+                                            <td>620,000원</td>
+                                            <td><span class="badge bg-success">완료</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023-03-15</td>
+                                            <td>내 마음을 색으로 표현하는 마음돌봄 페인팅</td>
+                                            <td>440,000원</td>
+                                            <td><span class="badge bg-success">완료</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023-02-28</td>
+                                            <td>늘 갖고 다니는 휴대폰 악세사리에 추억을 담아</td>
+                                            <td>400,000원</td>
+                                            <td><span class="badge bg-success">완료</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-primary">전체 내역 보기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright">Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html> 

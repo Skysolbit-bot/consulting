@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국커리어개발원 - 강사 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+        }
+        
+        .register-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .register-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .register-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .form-section {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #3a86ff;
+            padding-bottom: 10px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .required::after {
+            content: "*";
+            color: #dc3545;
+            margin-left: 4px;
+        }
+        
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        
+        .btn-register {
+            background-color: #3a86ff;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 500;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-register:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+        }
+        
+        .agreement-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .agreement-box p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .service-option {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+        
+        .service-option:hover {
+            border-color: #3a86ff;
+            cursor: pointer;
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .service-option.selected {
+            border-color: #3a86ff;
+            background: #e7f1ff;
+        }
+        
+        .login-section {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .login-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #3a86ff;
+            padding-bottom: 10px;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .login-form .form-control {
+            margin-bottom: 15px;
+        }
+        
+        .login-form .btn-login {
+            background-color: #3a86ff;
+            color: white;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-form .btn-login:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+        }
+        
+        .login-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .login-links a {
+            color: #3a86ff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .register-options {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .register-option {
+            background: #f8f9fa;
+            padding: 15px 30px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            margin: 0 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .register-option:hover {
+            border-color: #3a86ff;
+            cursor: pointer;
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .register-option i {
+            font-size: 2rem;
+            color: #3a86ff;
+            margin-bottom: 10px;
+        }
+        
+        .register-option h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .register-option p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        footer h5 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        footer p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .register-options {
+                flex-direction: column;
+            }
+            
+            .register-option {
+                margin-bottom: 15px;
+            }
+            
+            .service-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="한국커리어개발원 로고">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="workshops.html">워크샵</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            내계정
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="instructor-dashboard.html">대시보드</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="instructor-schedule.html">월별/일정</a></li>
+                            <li><a class="dropdown-item" href="instructor-payment.html">정산</a></li>
+                            <li><a class="dropdown-item" href="instructor-profile.html">정보수정</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="instructor-company.html">회사등록</a></li>
+                            <li><a class="dropdown-item" href="instructor-register.html">강사등록</a></li>
+                            <li><a class="dropdown-item" href="instructor-products.html">상품등록</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h1>한국커리어개발원 강사등록</h1>
+            <p>오류 및 문의사항은 이메일(contact@innertrip.co.kr)을 통해 연락해주시면 빠르게 응답해 드리겠습니다.</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="login-section">
+                    <h2>로그인</h2>
+                    <form class="login-form">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="이메일/비밀번호 찾기">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" placeholder="비밀번호">
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">기억하기</label>
+                        </div>
+                        <button type="submit" class="btn btn-login">로그인</button>
+                        <div class="login-links">
+                            <a href="#">이메일/비밀번호 찾기</a>
+                            <a href="#">회원가입</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="register-options">
+                    <div class="register-option">
+                        <i class="fas fa-user"></i>
+                        <h3>일반회원</h3>
+                        <p>워크샵을 찾고계신가요?</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check text-success me-2"></i>맞춤형 워크샵 추천</li>
+                            <li><i class="fas fa-check text-success me-2"></i>전문가 상담 서비스</li>
+                            <li><i class="fas fa-check text-success me-2"></i>예약/결제 관리</li>
+                            <li><i class="fas fa-check text-success me-2"></i>후기 작성 및 조회</li>
+                            <li><i class="fas fa-check text-success me-2"></i>이벤트/할인 혜택</li>
+                        </ul>
+                        <button class="btn btn-outline-primary mt-3" onclick="showRegisterForm('general')">일반회원 가입</button>
+                    </div>
+                    <div class="register-option">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>판매자회원</h3>
+                        <p>함께 성장할 판매자님을 찾습니다!</p>
+                        <ul class="list-unstyled mt-3">
+                            <li><i class="fas fa-check text-success me-2"></i>상품 등록/관리</li>
+                            <li><i class="fas fa-check text-success me-2"></i>예약/정산 관리</li>
+                            <li><i class="fas fa-check text-success me-2"></i>매출 통계/분석</li>
+                            <li><i class="fas fa-check text-success me-2"></i>홍보/마케팅 지원</li>
+                            <li><i class="fas fa-check text-success me-2"></i>전문가 컨설팅</li>
+                        </ul>
+                        <button class="btn btn-outline-primary mt-3" onclick="showRegisterForm('seller')">판매자회원 가입</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-section" id="generalRegisterForm" style="display: none;">
+                    <h2>일반회원 가입</h2>
+                    <form id="generalMemberForm">
+                        <div class="mb-3">
+                            <label class="form-label required">이름</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">이메일</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">비밀번호</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">비밀번호 확인</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">연락처</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                이용약관 및 개인정보 처리방침에 동의합니다.
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-register">가입하기</button>
+                    </form>
+                </div>
+
+                <div class="form-section" id="sellerRegisterForm" style="display: none;">
+                    <h2>판매자회원 가입</h2>
+                    <form id="sellerMemberForm">
+                        <div class="mb-3">
+                            <label class="form-label required">이름</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">회사/단체명</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">사업자등록번호</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">이메일</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">비밀번호</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">비밀번호 확인</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label required">연락처</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTermsSeller" required>
+                            <label class="form-check-label" for="agreeTermsSeller">
+                                이용약관 및 개인정보 처리방침에 동의합니다.
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-register">가입하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비즈니스 편집 섹션 -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">비즈니스 정보 관리</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h4>기본 정보</h4>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="businessName" class="form-label">비즈니스명</label>
+                                            <input type="text" class="form-control" id="businessName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="businessCategory" class="form-label">비즈니스 카테고리</label>
+                                            <select class="form-select" id="businessCategory">
+                                                <option selected>카테고리 선택</option>
+                                                <option>교육/강의</option>
+                                                <option>컨설팅</option>
+                                                <option>코칭</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="businessDescription" class="form-label">비즈니스 설명</label>
+                                            <textarea class="form-control" id="businessDescription" rows="4"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <h4>연락처 정보</h4>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="businessPhone" class="form-label">전화번호</label>
+                                            <input type="tel" class="form-control" id="businessPhone">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="businessEmail" class="form-label">이메일</label>
+                                            <input type="email" class="form-control" id="businessEmail">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="businessAddress" class="form-label">주소</label>
+                                            <input type="text" class="form-control" id="businessAddress">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>서비스 관리</h4>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>서비스명</th>
+                                                <th>가격</th>
+                                                <th>상태</th>
+                                                <th>관리</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>워크샵 A</td>
+                                                <td>50,000원</td>
+                                                <td><span class="badge bg-success">활성</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-primary">수정</button>
+                                                    <button class="btn btn-sm btn-outline-danger">삭제</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="btn btn-primary mt-3" onclick="addNewService()">새 서비스 추가</button>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary btn-lg">변경사항 저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 서브벤더 목록 섹션 -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">서브벤더 목록</h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">장소 추천</h5>
+                                        <p class="card-text">워크샵에 적합한 장소를 추천해드립니다.</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>다양한 장소 옵션</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>예산별 맞춤 추천</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>실시간 가용성 확인</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">장소 견적</h5>
+                                        <p class="card-text">선택한 장소의 상세 견적을 제공합니다.</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>상세 견적서 제공</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>부대시설 포함</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>협상 지원</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">버스 대절</h5>
+                                        <p class="card-text">참가자 이동을 위한 버스 대절 서비스</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>전문 운전사</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>안전 보험</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>맞춤형 노선</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">행사 디자인</h5>
+                                        <p class="card-text">워크샵 브랜딩 및 디자인 서비스</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>로고 디자인</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>배너/포스터</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>홍보물 제작</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">영상 촬영</h5>
+                                        <p class="card-text">워크샵 스케치 영상 촬영 서비스</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>전문 촬영</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>편집 포함</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>하이라이트 영상</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">운영 매니저</h5>
+                                        <p class="card-text">전문 운영 매니저 파견 서비스</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>현장 관리</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>참가자 케어</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>일정 관리</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상품 목록 섹션 -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">상품 목록</h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">협동 실내 컬링</h5>
+                                        <p class="card-text">개인보다는 팀, 실력보다는 전략!</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-users text-primary me-2"></i>5,445명 참여</li>
+                                            <li><i class="fas fa-user-friends text-primary me-2"></i>10~80명</li>
+                                            <li><i class="fas fa-clock text-primary me-2"></i>회당 2시간</li>
+                                            <li><i class="fas fa-tag text-primary me-2"></i>650,000원</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">네온사인 키트</h5>
+                                        <p class="card-text">네온처럼 빛나는 우리네트망</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-users text-primary me-2"></i>신규 상품</li>
+                                            <li><i class="fas fa-user-friends text-primary me-2"></i>10~100명</li>
+                                            <li><i class="fas fa-clock text-primary me-2"></i>맞춤형</li>
+                                            <li><i class="fas fa-tag text-primary me-2"></i>350,000원</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">앙금 플라워 케이크</h5>
+                                        <p class="card-text">소중하고 특별한 나를 위한</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-users text-primary me-2"></i>289명 참여</li>
+                                            <li><i class="fas fa-user-friends text-primary me-2"></i>10~20명</li>
+                                            <li><i class="fas fa-clock text-primary me-2"></i>회당 1시간</li>
+                                            <li><i class="fas fa-tag text-primary me-2"></i>600,000원</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">크리스마스 콘트리</h5>
+                                        <p class="card-text">겨울 그린 소재들을 사용하여 힐링하는</p>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-users text-primary me-2"></i>28명 참여</li>
+                                            <li><i class="fas fa-user-friends text-primary me-2"></i>10~100명</li>
+                                            <li><i class="fas fa-clock text-primary me-2"></i>회당 1시간</li>
+                                            <li><i class="fas fa-tag text-primary me-2"></i>600,000원</li>
+                                        </ul>
+                                        <button class="btn btn-outline-primary w-100">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright">Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        document.getElementById('instructorRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.');
+            this.reset();
+        });
+
+        function showRegisterForm(type) {
+            // 모든 폼을 숨기고
+            document.getElementById('generalRegisterForm').style.display = 'none';
+            document.getElementById('sellerRegisterForm').style.display = 'none';
+            
+            // 선택된 폼만 표시
+            if (type === 'general') {
+                document.getElementById('generalRegisterForm').style.display = 'block';
+            } else if (type === 'seller') {
+                document.getElementById('sellerRegisterForm').style.display = 'block';
+            }
+        }
+
+        // 일반회원 가입 폼 제출
+        document.getElementById('generalMemberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('일반회원 가입이 완료되었습니다.');
+            this.reset();
+            this.parentElement.style.display = 'none';
+        });
+
+        // 판매자회원 가입 폼 제출
+        document.getElementById('sellerMemberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('판매자회원 가입이 완료되었습니다.');
+            this.reset();
+            this.parentElement.style.display = 'none';
+        });
+
+        // 새 서비스 추가 함수
+        function addNewService() {
+            // 서비스 목록 테이블 가져오기
+            const serviceTable = document.querySelector('.table tbody');
+            
+            // 새 행 생성
+            const newRow = document.createElement('tr');
+            
+            // 새 행에 데이터 추가
+            newRow.innerHTML = `
+                <td>
+                    <input type="text" class="form-control" placeholder="서비스명">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="설명">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="가격">
+                </td>
+                <td>
+                    <input type="text" class="form-control" placeholder="기간">
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteService(this)">삭제</button>
+                </td>
+            `;
+            
+            // 테이블에 새 행 추가
+            serviceTable.appendChild(newRow);
+        }
+        
+        // 서비스 삭제 함수
+        function deleteService(button) {
+            // 버튼이 있는 행 삭제
+            button.closest('tr').remove();
+        }
+    </script>
+</body>
+</html> 

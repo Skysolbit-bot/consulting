@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선물/서비스 - 이너트립</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="이너트립 로고" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="workshopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            워크샵
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="workshopDropdown">
+                            <li><a class="dropdown-item" href="workshops.html">워크샵 목록</a></li>
+                            <li><a class="dropdown-item" href="workshop-planning.html">워크샵 기획하기</a></li>
+                            <li><a class="dropdown-item" href="workshop-templates.html">워크샵 템플릿</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="events.html">이벤트</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="filter-sidebar">
+                    <h4 class="mb-4">필터</h4>
+                    
+                    <div class="filter-section mb-4">
+                        <h5>카테고리</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="category-all">
+                            <label class="form-check-label" for="category-all">전체</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="category-snack">
+                            <label class="form-check-label" for="category-snack">간식/다과</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="category-meal">
+                            <label class="form-check-label" for="category-meal">식사</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="category-gift">
+                            <label class="form-check-label" for="category-gift">기념품</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="category-service">
+                            <label class="form-check-label" for="category-service">부가서비스</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section mb-4">
+                        <h5>가격대</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="price-all">
+                            <label class="form-check-label" for="price-all">전체</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="price-1">
+                            <label class="form-check-label" for="price-1">1만원 이하</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="price-2">
+                            <label class="form-check-label" for="price-2">1만원 ~ 3만원</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="price-3">
+                            <label class="form-check-label" for="price-3">3만원 ~ 5만원</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="price-4">
+                            <label class="form-check-label" for="price-4">5만원 이상</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="gift-grid">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=800" class="card-img-top" alt="프리미엄 간식 박스">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">간식/다과</span>
+                                    <h5 class="card-title">프리미엄 간식 박스</h5>
+                                    <p class="card-text">고급 과자, 견과류, 음료로 구성된 프리미엄 간식 세트</p>
+                                    <p class="card-text"><strong>15,000원</strong> / 인</p>
+                                    <a href="gift-detail.html?id=gift1" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800" class="card-img-top" alt="도시락 케이터링">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">식사</span>
+                                    <h5 class="card-title">도시락 케이터링</h5>
+                                    <p class="card-text">신선한 재료로 만든 건강한 도시락 서비스</p>
+                                    <p class="card-text"><strong>25,000원</strong> / 인</p>
+                                    <a href="gift-detail.html?id=gift2" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800" class="card-img-top" alt="에코 기프트 세트">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">기념품</span>
+                                    <h5 class="card-title">에코 기프트 세트</h5>
+                                    <p class="card-text">친환경 텀블러, 에코백으로 구성된 기념품 세트</p>
+                                    <p class="card-text"><strong>35,000원</strong> / 세트</p>
+                                    <a href="gift-detail.html?id=gift3" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800" class="card-img-top" alt="디저트 플래터">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">간식/다과</span>
+                                    <h5 class="card-title">디저트 플래터</h5>
+                                    <p class="card-text">수제 쿠키, 마카롱, 초콜릿으로 구성된 디저트 세트</p>
+                                    <p class="card-text"><strong>20,000원</strong> / 인</p>
+                                    <a href="gift-detail.html?id=gift4" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800" class="card-img-top" alt="케이터링 뷔페">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">식사</span>
+                                    <h5 class="card-title">케이터링 뷔페</h5>
+                                    <p class="card-text">다양한 메뉴로 구성된 프리미엄 뷔페 서비스</p>
+                                    <p class="card-text"><strong>45,000원</strong> / 인</p>
+                                    <a href="gift-detail.html?id=gift5" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="https://images.unsplash.com/photo-1584385002340-d886f3a0f097?w=800" class="card-img-top" alt="포토 서비스">
+                                <div class="card-body">
+                                    <span class="badge bg-primary mb-2">부가서비스</span>
+                                    <h5 class="card-title">포토 서비스</h5>
+                                    <p class="card-text">전문 포토그래퍼의 행사 스냅 촬영 서비스</p>
+                                    <p class="card-text"><strong>300,000원</strong> / 4시간</p>
+                                    <a href="gift-detail.html?id=gift6" class="btn btn-outline-primary mt-2">자세히 보기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html> 

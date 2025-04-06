@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 상세 - 한국커리어개발원</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #38b000;
+            --info-color: #3a86ff;
+            --warning-color: #ffbe0b;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--dark-color);
+            background-color: #f9f9f9;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand img {
+            transition: transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover img {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2a75e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 134, 255, 0.3);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: #2d8a00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(56, 176, 0, 0.3);
+        }
+        
+        .event-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .event-header h2 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .event-header .badge {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .event-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .event-content {
+            line-height: 1.8;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .event-content h4 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .event-content h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .event-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .event-info h4 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .event-info h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .event-info ul li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .event-info ul li i {
+            margin-top: 0.3rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .event-terms {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .event-terms h4 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .event-terms h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .event-terms ul li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .event-terms ul li i {
+            margin-top: 0.3rem;
+            margin-right: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        .event-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .event-actions .btn {
+            flex: 1;
+        }
+        
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--dark-color);
+        }
+        
+        footer {
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+            margin-top: 5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        footer h5 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        footer p {
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer hr {
+            margin: 2rem 0;
+            opacity: 0.2;
+        }
+        
+        .copyright {
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .event-header {
+                padding: 2rem 0;
+                margin-bottom: 2rem;
+            }
+            
+            .event-content, .event-info, .event-terms {
+                padding: 1.5rem;
+            }
+            
+            .event-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://i.ibb.co/3fbFzYj/logo.png" alt="한국커리어개발원 로고" style="height: 40px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="workshopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            워크샵
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="workshopDropdown">
+                            <li><a class="dropdown-item" href="workshops.html">워크샵 목록</a></li>
+                            <li><a class="dropdown-item" href="workshop-planning.html">워크샵 기획하기</a></li>
+                            <li><a class="dropdown-item" href="workshop-templates.html">워크샵 템플릿</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="spaces.html">공간</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gifts.html">선물/서비스</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="events.html">이벤트</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-primary me-2">로그인/회원가입</button>
+                    <a href="instructor-register.html" class="btn btn-primary me-2">강사등록</a>
+                    <a href="solution.html" class="btn btn-success">원클릭 솔루션</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="eventDetail">
+        <!-- 이벤트 상세 정보는 JavaScript로 동적 생성됩니다 -->
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>워크샵 문의/상담</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>강사제휴</h5>
+                    <p>E-mail.jobkcdi@naver.com</p>
+                    <p>02-761-1470</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>고객센터</h5>
+                    <p>평일 오전 10:00 ~ 오후 6:00</p>
+                    <p>02-761-1470</p>
+                    <p><small>(통화량이 많을 때는 채팅상담을 이용해주세요.)</small></p>
+                </div>
+                <div class="col-md-3">
+                    <h5>회사 정보</h5>
+                    <p><strong>한국커리어개발원</strong></p>
+                    <p>[본사] 서울특별시 마포구 와우산로 45 (상수동) 영빈빌딩 4층</p>
+                    <p>대표이사: 표형종</p>
+                    <p>사업자 등록번호: 107-87-15673</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="copyright">Copyright © 2019-2025 한국커리어개발원. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // 이벤트 데이터
+        const events = {
+            event1: {
+                title: "봄맞이 워크샵 20% 할인",
+                period: "2024.04.01 ~ 2024.04.30",
+                category: "할인",
+                description: "봄을 맞아 모든 워크샵 프로그램 20% 할인 이벤트를 진행합니다.",
+                details: [
+                    "전체 워크샵 프로그램 20% 할인",
+                    "기간: 2024년 4월 1일 ~ 4월 30일",
+                    "최소 10인 이상 단체 예약 시 적용",
+                    "타 할인과 중복 적용 불가"
+                ],
+                terms: [
+                    "사전 예약 필수",
+                    "취소/환불 규정은 기존과 동일",
+                    "할인은 프로그램 비용에만 적용 (숙박, 식사 등 부가서비스 제외)",
+                    "예약 시 '봄맞이 할인' 이벤트 적용을 요청해주세요"
+                ]
+            },
+            event2: {
+                title: "신규 회원 특별 혜택",
+                period: "2024.04.01 ~ 2024.12.31",
+                category: "신규가입",
+                description: "한국커리어개발원 신규 회원님을 위한 특별한 혜택을 준비했습니다.",
+                details: [
+                    "첫 워크샵 예약 시 10% 추가 할인",
+                    "웰컴 기프트 증정 (에코백 + 텀블러)",
+                    "1:1 워크샵 컨설팅 무료 제공",
+                    "회원가입 후 3개월 이내 사용 가능"
+                ],
+                terms: [
+                    "신규 회원 전용 혜택입니다",
+                    "웰컴 기프트는 첫 워크샵 진행 시 현장에서 수령",
+                    "타 할인과 중복 적용 불가",
+                    "기프트 재고 소진 시 다른 상품으로 대체될 수 있습니다"
+                ]
+            },
+            event3: {
+                title: "여름 휴가 얼리버드 프로모션",
+                period: "2024.04.15 ~ 2024.05.31",
+                category: "얼리버드",
+                description: "여름 성수기 워크샵을 미리 예약하시고 특별 혜택을 받으세요.",
+                details: [
+                    "7-8월 워크샵 15% 할인",
+                    "숙박 시설 업그레이드 제공",
+                    "단체 티셔츠 무료 제작 (20인 이상)",
+                    "바비큐 파티 20% 할인"
+                ],
+                terms: [
+                    "6월 30일까지 잔금 완납 필수",
+                    "일정 변경 시 할인 혜택이 적용되지 않을 수 있습니다",
+                    "숙박 업그레이드는 잔여 객실 상황에 따라 제한될 수 있습니다",
+                    "천재지변으로 인한 취소 시 전액 환불"
+                ]
+            }
+        };
+
+        // URL에서 이벤트 ID 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        
+        // 해당 이벤트 정보 가져오기
+        const event = events[eventId];
+        
+        if (event) {
+            // 이벤트 상세 정보 HTML 생성
+            const detailHtml = `
+                <div class="event-header">
+                    <div class="container">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="events.html">이벤트</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">${event.title}</li>
+                            </ol>
+                        </nav>
+                        
+                        <h2>${event.title}</h2>
+                        <span class="badge">${event.category}</span>
+                        <p><i class="far fa-calendar-alt me-2"></i>기간: ${event.period}</p>
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="event-content">
+                                <h4>이벤트 소개</h4>
+                                <p>${event.description}</p>
+                            </div>
+                            
+                            <div class="event-info">
+                                <h4>이벤트 혜택</h4>
+                                <ul class="list-unstyled">
+                                    ${event.details.map(detail => `
+                                        <li>
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>${detail}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="event-terms">
+                                <h4>이용 약관</h4>
+                                <ul class="list-unstyled">
+                                    ${event.terms.map(term => `
+                                        <li>
+                                            <i class="fas fa-info-circle"></i>
+                                            <span>${term}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="event-actions">
+                                <button class="btn btn-primary" onclick="handleEventApply()">이벤트 신청하기</button>
+                                <button class="btn btn-outline-primary" onclick="handleEventInquiry()">문의하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('eventDetail').innerHTML = detailHtml;
+        } else {
+            document.getElementById('eventDetail').innerHTML = '<div class="container mt-5"><div class="alert alert-danger">해당 이벤트를 찾을 수 없습니다.</div></div>';
+        }
+
+        // 이벤트 신청 처리
+        function handleEventApply() {
+            alert('이벤트 신청이 완료되었습니다. 담당자 확인 후 연락드리겠습니다.');
+        }
+
+        // 문의하기 처리
+        function handleEventInquiry() {
+            alert('문의가 접수되었습니다. 담당자가 확인 후 연락드리겠습니다.');
+        }
+    </script>
+</body>
+</html> 
